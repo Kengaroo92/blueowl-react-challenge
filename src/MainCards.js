@@ -1,12 +1,12 @@
 import React from 'react';
 
-const MainCards = (props) => {
+const MainCards = () => {
     return (
         <div className="ui card">
             <div className="card">
                 <div className="content">
-                    <div className="removebutton">
-                        <i className="remove icon"></i>
+                    <div className="remove button">
+                        <i className="window close outline icon"></i>
                     </div>
                     <div className="number"></div>
                 </div>
@@ -14,5 +14,6 @@ const MainCards = (props) => {
         </div>
     );
 };
+
 
 export default MainCards;

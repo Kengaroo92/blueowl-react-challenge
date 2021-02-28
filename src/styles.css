@@ -1,0 +1,10 @@
+.rowA {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  .rowA div {
+    display: inline-block;
+    text-align: center;
+  }
