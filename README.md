@@ -9,7 +9,7 @@ This is a coding challenge for the [Blue Owl AI](https://www.blueowlai.com/) Sof
 ## The Challenge
 The challenge is to create a responsive React application (using either JavaScript or TypeScript) that will display a list of cards on a page as displayed in the graphic below.
 
-![Blue Owl AI - React Challenge](public\BOAI React Challenge.jpg)
+![Blue Owl AI - React Challenge](https://github.com/Kengaroo92/blueowl-react-challenge/blob/master/public/BOAI%20React%20Challenge.jpg)
 
 There is a fixed-width pane on the right of the window that remains attached to the right side when the user resizes the window. Inside the pane, is a formatted display of these instructions. If the browser width is small, the pane is hidden.
 
