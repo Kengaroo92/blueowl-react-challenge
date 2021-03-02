@@ -1,22 +1,62 @@
-import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import MainCard from "./MainCard";
+import { useState } from "react";
+import { Card } from "react";
+import "bootstrap/dist/css/bootstrap.css";
 import "./styles.css";
-import { useState } from 'react';
+
+const generateId = (seed = 0) => () => seed++;
+
+const getRandomNumber = function (min, max) {
+  let getRandom = Math.floor(Math.random() * max + min);
+  return getRandom;
+};
+
+const MainCard = ({ number, onRemove }) => {
+  return (
+    <div>
+      {number}
+      <button onClick={onRemove} className="ui mini red basic icon button">
+        <i
+          style={{
+            position: "relative",
+            top: "0",
+            right: "0",
+          }}
+        >
+          x
+        </i>
+      </button>
+    </div>
+  );
+};
 
 export default function App() {
-  const [{ items }, setItems] = useState({ items: [] });
-  const addItem = () => {
-    items.push(<div key={items.length}><MainCard /></div>);
-    setItems({ items: [...items] });
+  const [cards, setCards] = useState([]);
+
+  const addCard = () => {
+    setCards((cards) => [
+      ...cards,
+      {
+        id: generateId(),
+        number: getRandomNumber(0, 101),
+      },
+    ]);
+  };
+
+  const removeCard = (id) => {
+    setCards((cards) => cards.filter((el) => el.id !== id));
   };
 
   return (
     <body>
       <header>
         <div className="ui buttons">
-          <button onClick={addItem} className="ui button mb-1 mt-1">
+          <button
+            type="button"
+            onClick={addCard}
+            className="ui button mb-1 mt-1"
+          >
             <i className="plus icon"></i>
             Add Card
           </button>
@@ -28,8 +68,14 @@ export default function App() {
         </div>
       </header>
 
-      <div class="card-container">
-        {items}
+      <div className="card-container">
+        {cards.map((cardNumber, index) => (
+          <MainCard
+            number={cardNumber.number}
+            key={cardNumber.id}
+            onRemove={() => removeCard(cardNumber.id)}
+          />
+        ))}
       </div>
 
       <aside className="showHide">
@@ -92,6 +138,6 @@ export default function App() {
       </footer>
     </body>
   );
-};
+}
 
 ReactDOM.render(<App />, document.querySelector("#root"));
