@@ -164,7 +164,7 @@ export default function App() {
             browser.
           </li>
           <li className="list-item">
-            Each card has a set pixel size of 300 pixels in width and 250 pixels
+            Each card has a set pixel size of 150 pixels in width and 100 pixels
             in heigth.
           </li>
           <li className="list-item">
