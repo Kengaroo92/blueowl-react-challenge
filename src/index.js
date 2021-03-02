@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
-import { Card } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import "./styles.css";
 
@@ -12,27 +11,45 @@ const getRandomNumber = function (min, max) {
   return getRandom;
 };
 
+const sortTypes = {
+  up: {
+    className: "sort-up",
+    fn: (a, b) => a.number - b.number,
+  },
+
+  down: {
+    className: "sort-down",
+    fn: (a, b) => b.number - a.number,
+  },
+
+  default: {
+    className: "sort",
+    fn: (a, b) => a,
+  },
+};
+
 const MainCard = ({ number, onRemove }) => {
   return (
-    <div>
-      {number}
-      <button onClick={onRemove} className="ui mini red basic icon button">
-        <i
-          style={{
-            position: "relative",
-            top: "0",
-            right: "0",
-          }}
-        >
-          x
-        </i>
+    <div className="card">
+      <button
+        onClick={onRemove}
+        className="ui mini red basic icon button"
+        style={{
+          position: "absolute",
+          top: "0",
+          right: "0",
+        }}
+      >
+        X
       </button>
+      {number}
     </div>
   );
 };
 
 export default function App() {
   const [cards, setCards] = useState([]);
+  const [currentSort, setCurrentSort] = useState("default");
 
   const addCard = () => {
     setCards((cards) => [
@@ -48,6 +65,28 @@ export default function App() {
     setCards((cards) => cards.filter((el) => el.id !== id));
   };
 
+  const onSortChange = () => {
+    let nextSort;
+
+    if (currentSort === "down") nextSort = "up";
+    else if (currentSort === "up") nextSort = "default";
+    else if (currentSort === "default") nextSort = "down";
+
+    setCurrentSort(nextSort);
+  };
+
+  const sortIcon = () => {
+    if (currentSort === "down") return "sort numeric down icon";
+    else if (currentSort === "up") return "sort numeric up icon";
+    else if (currentSort === "default") return "sort icon";
+  };
+
+  const sortText = () => {
+    if (currentSort === "down") return <div>Sort Descending</div>;
+    else if (currentSort === "up") return <p>Sort Ascending</p>;
+    else if (currentSort === "default") return <p>Reset Sort</p>;
+  };
+
   return (
     <body>
       <header>
@@ -55,27 +94,33 @@ export default function App() {
           <button
             type="button"
             onClick={addCard}
-            className="ui button mb-1 mt-1"
+            className="ui button mb-1 mt-1 mr-1"
           >
-            <i className="plus icon"></i>
-            Add Card
+            <i className="plus icon"></i>Add Card
           </button>
           <div className="or mb-1 mt-1"></div>
-          <button className="ui positive button mb-1 mt-1">
-            <i className="sort numeric down icon"></i>
+          <button
+            type="button"
+            onClick={onSortChange}
+            className="ui positive button mb-1 mt-1 mr-1"
+          >
+            <i className={sortIcon()}></i>
             Sort All
           </button>
         </div>
       </header>
 
       <div className="card-container">
-        {cards.map((cardNumber, index) => (
-          <MainCard
-            number={cardNumber.number}
-            key={cardNumber.id}
-            onRemove={() => removeCard(cardNumber.id)}
-          />
-        ))}
+        {cards
+          .slice()
+          .sort(sortTypes[currentSort].fn)
+          .map((cardNumber) => (
+            <MainCard
+              number={cardNumber.number}
+              key={cardNumber.id}
+              onRemove={() => removeCard(cardNumber.id)}
+            />
+          ))}
       </div>
 
       <aside className="showHide">
