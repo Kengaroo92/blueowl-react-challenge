@@ -2,22 +2,34 @@ import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import MainCard from "./MainCard";
-import AddCard from "./AddCard";
-import SortAll from "./SortAll";
 import "./styles.css";
-const App = () => {
+import { useState } from 'react';
+
+export default function App() {
+  const [{ items }, setItems] = useState({ items: [] });
+  const addItem = () => {
+    items.push(<div key={items.length}><MainCard /></div>);
+    setItems({ items: [...items] });
+  };
+
   return (
     <body>
       <header>
         <div className="ui buttons">
-          <AddCard />
+          <button onClick={addItem} className="ui button mb-1 mt-1">
+            <i className="plus icon"></i>
+            Add Card
+          </button>
           <div className="or mb-1 mt-1"></div>
-          <SortAll />
+          <button className="ui positive button mb-1 mt-1">
+            <i className="sort numeric down icon"></i>
+            Sort All
+          </button>
         </div>
       </header>
 
       <div class="card-container">
-        <MainCard />
+        {items}
       </div>
 
       <aside className="showHide">

@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.css";
-import { Card, Button } from "react-bootstrap";
 import React from "react";
+import { Card, Button } from "react-bootstrap";
 
 let getRandomNumber = function (min, max) {
   let getRandom = Math.floor(Math.random() * max + min);
@@ -27,9 +27,7 @@ const MainCard = () => {
           }}
         ></i>
       </Button>
-      <Card.Body>
-        <Card.Text>{getRandomNumber(0, 101)}</Card.Text>
-      </Card.Body>
+      <Card.Body>{getRandomNumber(0, 101)}</Card.Body>
     </Card>
   );
 };
